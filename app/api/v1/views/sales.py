@@ -6,7 +6,7 @@ ns_sales = Namespace('sales',description='Sales Endpoints')
 
 mod = ns_sales.model('sales model',{
 	'name': fields.String(description='Name of product sold'),
-	'quantity': fields.String(description='Quantity of product sold')
+	'quantity': fields.Integer(description='Quantity of product sold')
 	})
 
 
