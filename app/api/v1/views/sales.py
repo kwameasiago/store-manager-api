@@ -7,6 +7,10 @@ ns_sales = Namespace('sales',description='Sales Endpoints')
 
 @ns_sales.route('/')
 class GetAll(Resource):
+	"""
+	Class contains get and post http method
+	for sales record
+	"""
 	def get(self):
 		return {'testing':'testing'}
 
@@ -16,5 +20,9 @@ class GetAll(Resource):
 
 @ns_sales.route('/<saleId>')
 class getOne(Resource):
+	"""
+	class contains http method get
+	for getting	one sale record
+	"""
 	def get(self,saleId):
 		return {'testing':'testing'}
