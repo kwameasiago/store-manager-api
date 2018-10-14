@@ -1,8 +1,10 @@
 from flask import Flask
 
+from .api.v1 import app_v1
 
-def create_app(blueprint1,cfg):
+
+def create_app():
 	app = Flask(__name__)
-	app.register_blueprint(blueprint1)
-	app.config.from_object(cfg)
+	app.register_blueprint(app_v1)
+	app.config.from_envvar('config')
 	app.run()
