@@ -7,4 +7,4 @@ def create_app():
 	app = Flask(__name__)
 	app.register_blueprint(app_v1)
 	app.config.from_envvar('config')
-	app.run()
+	return app
