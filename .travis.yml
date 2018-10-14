@@ -9,7 +9,7 @@ install:
 before_script:
   - export config='../instance/config.py'
 
-scripts:
+script:
   - pytest --cov=app
   - coveralls
 
