@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/SelaDanti/store-manager-api.svg?branch=ch-apiv1-test-161202778)](https://travis-ci.org/SelaDanti/store-manager-api)
 **Store Manager**
 
 Store Manager is a web application that helps store owners manage sales and product inventory 
