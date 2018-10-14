@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/SelaDanti/store-manager-api.svg?branch=ch-apiv1-test-161202778)](https://travis-ci.org/SelaDanti/store-manager-api)  [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/SelaDanti/store-manager-api/pulls/1) 
+[![Build Status](https://travis-ci.org/SelaDanti/store-manager-api.svg?branch=ch-apiv1-test-161202778)](https://travis-ci.org/SelaDanti/store-manager-api)  [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/SelaDanti/store-manager-api/pull/1) 
 
 **Store Manager**
 
