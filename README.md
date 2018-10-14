@@ -10,13 +10,17 @@ Store manager is an application that aims to easen the life of a store owner and
 **Code style**
 
 The api is constructed using python flask and flask restplus
+
 Testing is done using pytest
+
 Test coverage is done using pytest-cov
 
 **Installation**
 
 Clone the repo to your local machine.
+
 open using python run run.py
+
 open localhost
 
 **Features**
