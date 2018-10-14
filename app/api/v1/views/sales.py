@@ -4,6 +4,11 @@ from flask_restplus import Namespace, Resource, fields
 
 ns_sales = Namespace('sales',description='Sales Endpoints')
 
+mod = ns_sales.model('sales model',{
+	'name': fields.String(description='Name of product sold'),
+	'quantity': fields.String(description='Quantity of product sold')
+	})
+
 
 @ns_sales.route('/')
 class GetAll(Resource):
@@ -14,6 +19,7 @@ class GetAll(Resource):
 	def get(self):
 		return {'testing':'testing'}
 
+	@ns_sales.expect(mod)
 	def post(self):
 		return {'testing': 'testing'}
 

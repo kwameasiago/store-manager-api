@@ -1,7 +1,14 @@
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 
-ns_product = Namespace('products',description='Routes related to products')
+ns_product = Namespace('products',description='Products endpoints')
+
+mod = ns_product.model('product model',{
+	'name': fields.String(description='products Name'),
+	'quantity': fields.Integer(description='Products quantity'),
+	'moq':fields.Integer(description='Minimum Inventory Quantity'),
+	'catefory': fields.String(description='category of product')
+	})
 
 
 @ns_product.route('/')
@@ -13,6 +20,7 @@ class AllProduct(Resource):
 	def get(self):
 		return {'testing':'testing'},200
 
+	@ns_product.expect(mod)
 	def post(self):
 		return {'testing':'testing'},200
 
