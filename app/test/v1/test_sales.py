@@ -63,7 +63,7 @@ class TestInvalidData(unittest.TestCase):
 
 	# test if id is invalids
 	def test_invalid_sales_id(self):
-		response =self.test.get('/sales/-12',content_type=self.content_type)
+		response =self.test.get('/sales/{}'.format(12),content_type=self.content_type)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,404)
 		self.assertEqual(data,{'result':'Invalid sales id'})

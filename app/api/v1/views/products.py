@@ -7,7 +7,7 @@ mod = ns_product.model('product model',{
 	'name': fields.String(description='products Name'),
 	'quantity': fields.Integer(description='Products quantity'),
 	'moq':fields.Integer(description='Minimum Inventory Quantity'),
-	'catefory': fields.String(description='category of product')
+	'catefory': fields.String(description='Category of product')
 	})
 
 
@@ -31,5 +31,5 @@ class OneProduct(Resource):
 	class contains http method get
 	for getting one products
 	"""
-	def get(self,id):
+	def get(self,productId):
 		return {'testing':'testing'},200
