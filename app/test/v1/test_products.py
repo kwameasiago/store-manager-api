@@ -8,7 +8,7 @@ class TestInvalidData(unittest.TestCase):
 	class to test sales endpoint
 	"""
 	def setUp(self):
-		self.test = create_app().test_client()
+		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
 
 	def tearDown(self):
@@ -70,7 +70,7 @@ class TestInvalidData(unittest.TestCase):
 
 class TestValidData(unittest.TestCase):
 	def setUp(self):
-		self.test = create_app().test_client()
+		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
 		self.payload = {'name': 'omo', 'quantity': 1, 'category': 'furniture','moq':0}
 

@@ -6,9 +6,6 @@ python:
 install:
   - pip install -r requirements.txt
 
-before_script:
-  - export config="../instance/config.py"
-
 script:
   - pytest --cov=app/api
   - coveralls
