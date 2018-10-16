@@ -2,6 +2,7 @@ import unittest
 import json
 
 from ... import create_app
+from ...api.v1.model.products import Products
 
 class TestInvalidData(unittest.TestCase):
 	"""
@@ -78,16 +79,20 @@ class TestValidData(unittest.TestCase):
 	def tearDown(self):
 		self.test = None
 		self.content_type = None
+		Products.products.clear()
 
 	def test_post_products_data(self):
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(self.payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
-		#self.assertEqual(response.status_code,201)
+		self.assertEqual(response.status_code,201)
 		self.assertEqual(data,{'result':'product added'})
 
 
 	def test_get_all_products(self):
+		post = self.test.post('/products/',content_type=self.content_type,
+			data=json.dumps(self.payload))
+		self.assertEqual(post.status_code,201)
 		response = self.test.get('/products/',content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
 

@@ -29,4 +29,4 @@ class Products(Verification):
 		if len(Products.products) == 0:
 			return {'result': 'no products found'},404
 		else:
-			return Products.products
+			return Products.products,200
