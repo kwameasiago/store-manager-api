@@ -23,7 +23,7 @@ class TestInvalidData(unittest.TestCase):
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result': 'Empty Input'})
+		self.assertEqual(data,{'result': 'data set is empty'})
 
 	# test when input contains only white space
 	def test_white_space_sales(self):
@@ -32,7 +32,7 @@ class TestInvalidData(unittest.TestCase):
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result': 'Input contains only whitespace'})
+		self.assertEqual(data,{'result': 'data set contains only white space'})
 
 	# test if user enter an invalid json  payload
 	def test_invalid_payload(self):
@@ -41,7 +41,7 @@ class TestInvalidData(unittest.TestCase):
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result':'Invalid json object'})
+		self.assertEqual(data,{'result':'invalid payload'})
 
 	# test if user enters an invalid data type
 	def test_invalid_data_type(self):
@@ -49,8 +49,8 @@ class TestInvalidData(unittest.TestCase):
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
-		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result': 'Invalid json object'})
+		self.assertEqual(response.status_code,400)
+		self.assertEqual(data['message'],'Input payload validation failed')
 
 	# test quantity less than 1
 	def test_min_quantity(self):
@@ -59,7 +59,7 @@ class TestInvalidData(unittest.TestCase):
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result':'Invalid Quantity'})
+		self.assertEqual(data,{'result':'quantity can not be less than one'})
 
 	def test_invalid_sales_id(self):
 		response =self.test.get('/products/-12',content_type=self.content_type)
@@ -84,7 +84,7 @@ class TestValidData(unittest.TestCase):
 			data=json.dumps(self.payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,201)
-		self.assertEqual(data,{'result':'sales added'})
+		self.assertEqual(data,{'result':'product added'})
 
 
 	def test_get_all_sales(self):
@@ -95,7 +95,7 @@ class TestValidData(unittest.TestCase):
 		response = self.test.get('/products/',content_type=self.content_type)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,404)
-		self.assertEqual(data,{'result':'no sales found'})
+		self.assertEqual(data,{'result':'no products found'})
 
 	def test_get_one_sales(self):
 		response = self.test.get('/product/',content_type=self.content_type)

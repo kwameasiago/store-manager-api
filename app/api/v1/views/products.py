@@ -1,13 +1,15 @@
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 
+from ..model.products import Products
+
 ns_product = Namespace('products',description='Products endpoints')
 
 mod = ns_product.model('product model',{
 	'name': fields.String(description='products Name'),
 	'quantity': fields.Integer(description='Products quantity'),
 	'moq':fields.Integer(description='Minimum Inventory Quantity'),
-	'catefory': fields.String(description='Category of product')
+	'category': fields.String(description='Category of product')
 	})
 
 
@@ -18,11 +20,16 @@ class AllProduct(Resource):
 	for getting  sales record
 	"""
 	def get(self):
-		return {'testing':'testing'},200
+		return Products.get_all()
 
-	@ns_product.expect(mod)
+	@ns_product.expect(mod,validate=True)
 	def post(self):
-		return {'testing':'testing'},200
+		data = request.get_json()
+		obj = Products(data)
+		if obj.check_user_input() == 1:
+			return obj.add_product()
+		else:
+			return obj.check_user_input()
 
 
 @ns_product.route('/<productId>')
