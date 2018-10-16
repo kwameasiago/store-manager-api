@@ -66,7 +66,15 @@ class TestInvalidData(unittest.TestCase):
 		response =self.test.get('/products/-12',content_type=self.content_type)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,404)
-		self.assertEqual(data,{'result':'Invalid products id'})
+		self.assertEqual(data,{'result':'no products found'})
+
+	def test_min_price(self):
+		payload = {'name': 'omo', 'quantity': 21, 'category': 'furniture','moq':0,'price':0}
+		response = self.test.post('/products/',content_type=self.content_type,
+			data=json.dumps(payload))
+		data = json.loads(response.get_data().decode('UTF-8'))
+		self.assertEqual(response.status_code,406)
+		self.assertEqual(data,{'result':'price can not be less than one'})
 
 
 class TestValidData(unittest.TestCase):
@@ -103,7 +111,10 @@ class TestValidData(unittest.TestCase):
 		self.assertEqual(data,{'result':'no products found'})
 
 	def test_get_one_products(self):
-		response = self.test.get('/product/',content_type=self.content_type)
+		post = self.test.post('/products/',content_type=self.content_type,
+			data=json.dumps(self.payload))
+		self.assertEqual(post.status_code,201)
+		response = self.test.get('/products/{}'.format(0),content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
 
 

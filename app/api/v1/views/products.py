@@ -40,4 +40,7 @@ class OneProduct(Resource):
 	for getting one products
 	"""
 	def get(self,productId):
-		return {'testing':'testing'},200
+		try:
+			return Products.get_one(int(productId))
+		except IndexError:
+			return {'result':'no products found'},404

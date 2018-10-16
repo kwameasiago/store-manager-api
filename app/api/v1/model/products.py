@@ -15,7 +15,9 @@ class Products(Verification):
 		elif self.is_whitespace([self.items['name'],self.items['category']]) is True:
 			return {'result': 'data set contains only white space'},406
 		elif self.items['quantity'] < 1:
-				return {'result': 'quantity can not be less than one'},406
+			return {'result': 'quantity can not be less than one'},406
+		elif self.items['price'] < 1:
+			return {'result': 'price can not be less than one'},406
 		else:
 			return 1
 
@@ -30,3 +32,10 @@ class Products(Verification):
 			return {'result': 'no products found'},404
 		else:
 			return Products.products,200
+
+	@classmethod
+	def get_one(cls,productId):
+		if len(Products.products) == 0:
+			return {'result': 'no products found'},404
+		else:
+			return Products.products[productId],200
