@@ -62,9 +62,6 @@ db.sqlite3
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 target/
 
