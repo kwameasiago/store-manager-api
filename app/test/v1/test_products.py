@@ -5,7 +5,7 @@ from ... import create_app
 
 class TestInvalidData(unittest.TestCase):
 	"""
-	class to test sales endpoint
+	class to test products endpoint
 	"""
 	def setUp(self):
 		self.test = create_app('testing').test_client()
@@ -17,7 +17,7 @@ class TestInvalidData(unittest.TestCase):
 
 
 	# test if input is empty
-	def test_empty_sales(self):
+	def test_empty_products(self):
 		payload = {'name': '', 'quantity': 1, 'category': 'furniture','moq':1,'price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
@@ -26,7 +26,7 @@ class TestInvalidData(unittest.TestCase):
 		self.assertEqual(data,{'result': 'data set is empty'})
 
 	# test when input contains only white space
-	def test_white_space_sales(self):
+	def test_white_space_products(self):
 		payload = {'name': '  ', 'quantity': 1, 'category': 'furniture','moq':1,'price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
@@ -61,11 +61,11 @@ class TestInvalidData(unittest.TestCase):
 		self.assertEqual(response.status_code,406)
 		self.assertEqual(data,{'result':'quantity can not be less than one'})
 
-	def test_invalid_sales_id(self):
+	def test_invalid_products_id(self):
 		response =self.test.get('/products/-12',content_type=self.content_type)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,404)
-		self.assertEqual(data,{'result':'Invalid sales id'})
+		self.assertEqual(data,{'result':'Invalid products id'})
 
 
 class TestValidData(unittest.TestCase):
@@ -79,7 +79,7 @@ class TestValidData(unittest.TestCase):
 		self.test = None
 		self.content_type = None
 
-	def test_post_sales_data(self):
+	def test_post_products_data(self):
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(self.payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
@@ -87,17 +87,17 @@ class TestValidData(unittest.TestCase):
 		self.assertEqual(data,{'result':'product added'})
 
 
-	def test_get_all_sales(self):
+	def test_get_all_products(self):
 		response = self.test.get('/products/',content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
 
-	def test_no_sales_found(self):
+	def test_no_products_found(self):
 		response = self.test.get('/products/',content_type=self.content_type)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,404)
 		self.assertEqual(data,{'result':'no products found'})
 
-	def test_get_one_sales(self):
+	def test_get_one_products(self):
 		response = self.test.get('/product/',content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
 
