@@ -27,8 +27,8 @@ class Verification:
 
 	def is_sales_payload(self,items):
 		items = items.keys()
-		if len(items) == 5:
-			product_keys = ['name','category','moq','quantity','price']
+		if len(items) == 3:
+			product_keys = ['productId','quantity','price']
 			for item in items:
 				if item not in product_keys:
 					return False
