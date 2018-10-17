@@ -26,7 +26,7 @@ class TestVerification(unittest.TestCase):
 		self.assertFalse(test)
 
 	def test_is_product_payload(self):
-		payload = {'name':'omo','moq':3,'quantity':0,'category':0}
+		payload = {'name':'omo','moq':3,'quantity':0,'category':0,'price':0}
 		test = self.obj.is_product_payload(payload)
 		self.assertTrue(test)
 
