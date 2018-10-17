@@ -32,14 +32,14 @@ class GetAll(Resource):
 			data =request.get_json()
 			obj = Sales(data)
 			data['price'] = 0
-			if obj.check_user_input() == 1:
+			if obj.check_sales_input() == 1:
 				pid = Products.get_one(data['productId'])
 				total = pid[data['productId']]['price'] * data['quantity']
 				data['price'] = total
 				Sales.sales.append(data)
 				return {'result': 'sales added'},201
 			else:
-				return obj.check_user_input()
+				return obj.check_sales_input()
 		except IndexError:
 			return {'result':'invalid product id'},406
 

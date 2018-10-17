@@ -27,10 +27,10 @@ class AllProduct(Resource):
 	def post(self):
 		data = request.get_json()
 		obj = Products(data)
-		if obj.check_user_input() == 1:
+		if obj.check_product_input() == 1:
 			return obj.add_product()
 		else:
-			return obj.check_user_input()
+			return obj.check_product_input()
 
 
 @ns_product.route('/<productId>')

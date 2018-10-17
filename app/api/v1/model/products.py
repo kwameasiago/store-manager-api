@@ -6,7 +6,7 @@ class Products(Verification):
 	def __init__(self,items):
 		self.items = items
 
-	def check_user_input(self):
+	def check_product_input(self):
 		payload=self.is_product_payload(self.items) 
 		if payload is False:
 			return {'result':'invalid payload'},406

@@ -6,7 +6,7 @@ class Sales(Verification):
 	def __init__(self,items):
 		self.items = items
 
-	def check_user_input(self):
+	def check_sales_input(self):
 		if self.is_sales_payload(self.items) is False:
 			return {'result': 'invalid payload'},406
 		elif self.items['quantity'] < 1:
