@@ -1,9 +1,10 @@
 class Config:
 	DEBUG=True
 	ENV='development'
+	TESTING=False
 
 class TestConfig:
-	DEBUG = False
+	TESTING = True
 
 
 app_config = {

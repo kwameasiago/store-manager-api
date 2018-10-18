@@ -1,4 +1,5 @@
 from .verify import Verification
+from .products import Products
 
 
 class Sales(Verification):
@@ -15,3 +16,10 @@ class Sales(Verification):
 			return {'result': 'productId can not be less than zero'},406
 		else:
 			return 1
+	
+	def add_sales(self):
+		pid = Products.get_one(self.items['productId'])
+		total = pid[self.items['productId']]['price'] * self.items['quantity']
+		self.items['price'] = total
+		Sales.sales.append(self.items)
+		return {'result': 'sales added'},201

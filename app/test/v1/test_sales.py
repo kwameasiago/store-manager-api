@@ -67,7 +67,7 @@ class TestValidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		self.product = {'name': 'omo', 'quantity': 1, 'category': 'furniture','moq':0,'price':100}
+		self.product = {'name': 'omo', 'quantity': 21, 'category': 'furniture','moq':0,'price':100}
 		self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(self.product))
 		self.payload = {'quantity':10,'productId':0}
@@ -82,6 +82,8 @@ class TestValidData(unittest.TestCase):
 	def test_add_sales(self):
 		response = self.test.post('/sales/',content_type=self.content_type,
 			data=json.dumps(self.payload))
+		data = json.loads(response.get_data().decode('UTF-8'))
+		self.assertEqual(data,{'result': 'sales added'})
 		self.assertEqual(response.status_code,201)
 
 
@@ -99,6 +101,7 @@ class TestValidData(unittest.TestCase):
 		self.assertEqual(response.status_code,201)
 		response = self.test.get('/sales/{}'.format(0),content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
+
 
 
 

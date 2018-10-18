@@ -28,21 +28,18 @@ class GetAll(Resource):
 
 	@ns_sales.expect(mod,validate=True)
 	def post(self):
-		try:
-			data =request.get_json()
-			obj = Sales(data)
-			data['price'] = 0
-			if obj.check_sales_input() == 1:
-				pid = Products.get_one(data['productId'])
-				total = pid[data['productId']]['price'] * data['quantity']
-				data['price'] = total
-				Sales.sales.append(data)
-				return {'result': 'sales added'},201
-			else:
+		data =request.get_json()
+		obj = Sales(data)
+		data['price'] = 0
+		if obj.check_sales_input() == 1:
+			try:
+				return obj.add_sales()
+			except IndexError:
+				return {'result':'invalid product id'},406
+			except KeyError:
+				return {'result': 'invalid product id'},406
+		else:
 				return obj.check_sales_input()
-		except IndexError:
-			return {'result':'invalid product id'},406
-
 
 @ns_sales.route('/<saleId>')
 class getOne(Resource):
@@ -52,6 +49,6 @@ class getOne(Resource):
 	"""
 	def get(self,saleId):
 		try:
-			return Sales.sale[int(saleId)]
+			return Sales.sales[int(saleId)]
 		except IndexError:
 			return {'result': 'sales does not exist'},404
