@@ -3,6 +3,7 @@ from flask_restplus import Namespace, Resource, fields
 
 from ..model.products import Products
 
+
 ns_product = Namespace('products',description='Products endpoints')
 
 mod = ns_product.model('product model',{
