@@ -30,40 +30,45 @@ class Verification:
 
 	def is_sales_payload(self,items):
 		items, sales_keys = items.keys(), ['productId','quantity','price']
+		res = None
 		if len(items) == 3:
 			for item in items:
 				if item not in sales_keys:
-					return False
-			return True
+					res = False
+			res = True
 		else:
-			return False
+			res = False
+		return res
 
 	def is_login_payload(self,logs):
 		logs, login_keys = logs.keys(),['email','role','password']
 		if len(logs) == 3:
 			for log in logs:
 				if log not in login_keys:
-					return False
-			return True
+					res = False
+			res = True
 		else:
-			return False
+			res = False
+		return res
 
 	def is_register_payload(self,items):
 		items, register_keys = items.keys(),['first_name','last_name','email','role','password']
 		if len(items) == 5:
 			for item in items:
 				if item not in register_keys:
-					return False
-			return True
+					res = False
+			res = True
 		else:
-			return False
+			res = False
+		return res
 
 
 	def is_email(self,email):
 		result = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
 		if result is None:
-			return True
+			res = True
 		else:
-			return False
+			res = False
+		return res
 
 
