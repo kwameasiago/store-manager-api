@@ -1,14 +1,17 @@
 class Config:
-	DEBUG=True
+	SECRET_KEY = 'qazxswedc'
+	DEBUG=False
 	ENV='development'
 	TESTING=False
 
-class TestConfig:
+class TestConfig(Config):
 	TESTING = True
 
+class DevelopmentConfig(Config):
+	DEBUG = True
 
 app_config = {
 	'testing':TestConfig,
-	'development':Config
+	'development':DevelopmentConfig
 }
 

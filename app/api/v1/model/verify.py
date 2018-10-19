@@ -1,3 +1,6 @@
+import re
+
+
 class Verification:
 	"""
 	class to verify data
@@ -34,4 +37,23 @@ class Verification:
 			return True
 		else:
 			return False
+
+	def is_login_payload(self,items):
+		items, product_keys = items.keys(),['email','role','password']
+		if len(items) == 3:
+			for item in items:
+				if item not in product_keys:
+					return False
+			return True
+		else:
+			return False
+
+
+	def is_email(self,email):
+		result = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+		if result is None:
+			return True
+		else:
+			return False
+
 
