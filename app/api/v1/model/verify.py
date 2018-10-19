@@ -48,6 +48,16 @@ class Verification:
 		else:
 			return False
 
+	def is_register_payload(self,items):
+		items, product_keys = items.keys(),['first_name','last_name','email','role','password']
+		if len(items) == 5:
+			for item in items:
+				if item not in product_keys:
+					return False
+			return True
+		else:
+			return False
+
 
 	def is_email(self,email):
 		result = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)

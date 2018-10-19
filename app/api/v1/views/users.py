@@ -30,10 +30,15 @@ class Login(Resource):
 			return obj.check_user_input()
 
 
-@ns_users.route('/register/attendant')
+@ns_users.route('/register')
 class RegisterAttendant(Resource):
 	@token_required
 	@ns_users.doc(security='apikey')
 	@ns_users.expect(mod_register)
 	def post(self):
-		return {'testing': 'testing'}
+		data = request.get_json()
+		obj = Accounts(data)
+		if obj.check_register_input() == 1:
+			return Accounts.accounts
+		else:
+			return obj.check_register_input()
