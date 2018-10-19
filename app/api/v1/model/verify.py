@@ -29,30 +29,30 @@ class Verification:
 			return False
 
 	def is_sales_payload(self,items):
-		items, product_keys = items.keys(), ['productId','quantity','price']
+		items, sales_keys = items.keys(), ['productId','quantity','price']
 		if len(items) == 3:
 			for item in items:
-				if item not in product_keys:
+				if item not in sales_keys:
 					return False
 			return True
 		else:
 			return False
 
 	def is_login_payload(self,items):
-		items, product_keys = items.keys(),['email','role','password']
+		items, login_keys = items.keys(),['email','role','password']
 		if len(items) == 3:
 			for item in items:
-				if item not in product_keys:
+				if item not in login_keys:
 					return False
 			return True
 		else:
 			return False
 
 	def is_register_payload(self,items):
-		items, product_keys = items.keys(),['first_name','last_name','email','role','password']
+		items, register_keys = items.keys(),['first_name','last_name','email','role','password']
 		if len(items) == 5:
 			for item in items:
-				if item not in product_keys:
+				if item not in register_keys:
 					return False
 			return True
 		else:
