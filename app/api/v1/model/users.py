@@ -17,17 +17,18 @@ class Accounts(Verification):
 		strings = [self.items['email'],self.items['role'],self.items['password']]
 		payload=self.is_login_payload(self.items) 
 		if payload is False:
-			return {'result':'invalid payload'},406
+			res = {'result':'invalid payload'},406
 		elif self.is_empty(strings) is True:
-			return {'result': 'data set is empty'},406
+			res = {'result': 'data set is empty'},406
 		elif self.is_whitespace(strings) is True:
-			return {'result': 'data set contains only white space'},406
+			res = {'result': 'data set contains only white space'},406
 		elif self.is_email(self.items['email']) is True:
-			return {'result': 'invalid email'}, 406
+			res = {'result': 'invalid email'}, 406
 		elif self.role:
-			return {'result': 'invalid role'}, 406
+			res = {'result': 'invalid role'}, 406
 		else:
-			return 1
+			res = 1
+		return res
 
 	def login(self):
 		token = jwt.encode({'email':self.items['email'],'role':self.items['role']},'qazxswedc',
