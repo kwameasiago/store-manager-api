@@ -38,11 +38,11 @@ class Verification:
 		else:
 			return False
 
-	def is_login_payload(self,items):
-		items, login_keys = items.keys(),['email','role','password']
-		if len(items) == 3:
-			for item in items:
-				if item not in login_keys:
+	def is_login_payload(self,logs):
+		logs, login_keys = logs.keys(),['email','role','password']
+		if len(logs) == 3:
+			for log in logs:
+				if log not in login_keys:
 					return False
 			return True
 		else:
