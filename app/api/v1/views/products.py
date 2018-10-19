@@ -2,6 +2,7 @@ from flask import request
 from flask_restplus import Namespace, Resource, fields
 
 from ..model.products import Products
+from ..utils.auth import token_required
 
 
 ns_product = Namespace('products',description='Products endpoints')
@@ -21,10 +22,14 @@ class AllProduct(Resource):
 	class contains http method get and post 
 	for getting  sales record
 	"""
+	@token_required
+	@ns_product.doc(security='apikey')
 	def get(self):
 		return Products.get_all()
 
 	@ns_product.expect(mod,validate=True)
+	@token_required
+	@ns_product.doc(security='apikey')
 	def post(self):
 		data = request.get_json()
 		obj = Products(data)
@@ -40,6 +45,8 @@ class OneProduct(Resource):
 	class contains http method get
 	for getting one products
 	"""
+	@token_required
+	@ns_product.doc(security='apikey')
 	def get(self,productId):
 		try:
 			return Products.get_one(int(productId))

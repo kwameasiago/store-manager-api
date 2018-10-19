@@ -3,6 +3,7 @@ from flask_restplus import Namespace, Resource, fields
 
 from ..model.sales import Sales
 from ..model.products import Products
+from ..utils.auth import token_required
 
 
 ns_sales = Namespace('sales',description='Sales Endpoints')
@@ -19,6 +20,8 @@ class GetAll(Resource):
 	Class contains get and post http method
 	for sales record
 	"""
+	@token_required
+	@ns_sales.doc(security='apikey')
 	def get(self):
 		sales = len(Sales.sales)
 		if sales < 1:
@@ -27,6 +30,8 @@ class GetAll(Resource):
 			return Sales.sales,200
 
 	@ns_sales.expect(mod,validate=True)
+	@token_required
+	@ns_sales.doc(security='apikey')
 	def post(self):
 		data =request.get_json()
 		obj = Sales(data)
@@ -47,6 +52,8 @@ class getOne(Resource):
 	class contains http method get
 	for getting	one sale record
 	"""
+	@token_required
+	@ns_sales.doc(security='apikey')
 	def get(self,saleId):
 		try:
 			return Sales.sales[int(saleId)]

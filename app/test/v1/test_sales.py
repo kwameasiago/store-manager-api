@@ -11,6 +11,12 @@ class TestInvalidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
+		payload = {'role': 'admin', 'password': '1234', 'email': 'admin@gmail.com'}
+		response = self.test.post('/users/login',content_type=self.content_type,
+			data=json.dumps(payload))
+		data =json.loads(response.get_data().decode('UTF-8'))
+		token = data['result']
+		self.headers = {'X-API-KEY':'{}'.format(token)}
 
 	def tearDown(self):
 		self.test = None
@@ -21,7 +27,7 @@ class TestInvalidData(unittest.TestCase):
 	def test_invalid_payload(self):
 		payload = {'productId':0,'quantity':10,'xyz':''}
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(payload))
+			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
 		self.assertEqual(data,{'result':'invalid payload'})
@@ -30,7 +36,7 @@ class TestInvalidData(unittest.TestCase):
 	def test_invalid_data_type(self):
 		payload = {'productId':0,'quantity':'0'}
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(payload))
+			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,400)
 		self.assertEqual(data['message'],'Input payload validation failed')
@@ -39,7 +45,7 @@ class TestInvalidData(unittest.TestCase):
 	def test_min_quantity(self):
 		payload = {'productId':0,'quantity':-90}
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(payload))
+			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
 		self.assertEqual(data,{'result':'quantity can not be less than one'})
@@ -48,7 +54,7 @@ class TestInvalidData(unittest.TestCase):
 	def test_min_id(self):
 		payload = {'productId':-20,'quantity':90}
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(payload))
+			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
 		self.assertEqual(data,{'result':'productId can not be less than zero'})
@@ -57,7 +63,7 @@ class TestInvalidData(unittest.TestCase):
 	def test_max_id(self):
 		payload = {'productId':20,'quantity':90}
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(payload))
+			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
 		self.assertEqual(data,{'result':'invalid product id'})
@@ -67,9 +73,15 @@ class TestValidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
+		payload = {'role': 'admin', 'password': '1234', 'email': 'admin@gmail.com'}
+		response = self.test.post('/users/login',content_type=self.content_type,
+			data=json.dumps(payload))
+		data =json.loads(response.get_data().decode('UTF-8'))
+		token = data['result']
+		self.headers = {'X-API-KEY':'{}'.format(token)}
 		self.product = {'name': 'omo', 'quantity': 21, 'category': 'furniture','moq':0,'price':100}
 		self.test.post('/products/',content_type=self.content_type,
-			data=json.dumps(self.product))
+			data=json.dumps(self.product),headers=self.headers)
 		self.payload = {'quantity':10,'productId':0}
 
 	def tearDown(self):
@@ -81,7 +93,7 @@ class TestValidData(unittest.TestCase):
 
 	def test_add_sales(self):
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(self.payload))
+			data=json.dumps(self.payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(data,{'result': 'sales added'})
 		self.assertEqual(response.status_code,201)
@@ -89,15 +101,16 @@ class TestValidData(unittest.TestCase):
 
 	def test_get_all_sales(self):
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(self.payload))
+			data=json.dumps(self.payload),headers=self.headers)
 		self.assertEqual(response.status_code,201)
-		response = self.test.get('/sales/',content_type=self.content_type)
+		response = self.test.get('/sales/',content_type=self.content_type
+			,headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,200)
 
 	def get_one_sales(self):
 		response = self.test.post('/sales/',content_type=self.content_type,
-			data=json.dumps(self.payload))
+			data=json.dumps(self.payload),headers=self.headers)
 		self.assertEqual(response.status_code,201)
 		response = self.test.get('/sales/{}'.format(0),content_type=self.content_type)
 		self.assertEqual(response.status_code,200)

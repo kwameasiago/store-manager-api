@@ -29,11 +29,12 @@ class Accounts(Verification):
 			return 1
 
 	def login(self):
-		token = jwt.encode({'email':self.items['email'],'role':self.items['role']},'qazxswedc').decode('UTF-8')
+		token = jwt.encode({'email':self.items['email'],'role':self.items['role']},'qazxswedc',
+			algorithm='HS256').decode('UTF-8')
 		for account in Accounts.accounts:
 			if account.get('email') == self.items['email']:
 				return {'result':token}
-		return {'result': 'email or password invalid'}
+		return {'result': 'email or password invalid'},406
 
 	def check_register_input(self):
 		strings = [self.items['first_name'],self.items['last_name'],self.items['role'],
