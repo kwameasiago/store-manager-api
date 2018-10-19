@@ -11,6 +11,7 @@ class Accounts(Verification):
 	'email': 'admin@gmail.com','password': '1234'}]
 	def __init__(self,items):
 		self.items = items
+		self.role = self.items['role'] != 'admin' and self.items['role'] != 'attendant'
 
 	def check_user_input(self):
 		strings = [self.items['email'],self.items['role'],self.items['password']]
@@ -23,7 +24,7 @@ class Accounts(Verification):
 			return {'result': 'data set contains only white space'},406
 		elif self.is_email(self.items['email']) is True:
 			return {'result': 'invalid email'}, 406
-		elif self.items['role'] != 'admin' and self.items['role'] != 'attendant':
+		elif self.role:
 			return {'result': 'invalid role'}, 406
 		else:
 			return 1
@@ -46,7 +47,7 @@ class Accounts(Verification):
 			return {'result': 'data set contains only white space'},406
 		elif self.is_email(self.items['email']) is True:
 			return {'result': 'invalid email'}, 406
-		elif self.items['role'] != 'admin' and self.items['role'] != 'attendant':
+		elif self.role:
 			return {'result': 'invalid role'}, 406
 		else:
 			Accounts.accounts.append(self.items)
