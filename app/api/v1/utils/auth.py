@@ -14,7 +14,7 @@ def token_required(f):
 		if not token:
 			return {'result': 'token is missing'},401
 		try:
-			token = jwt.decode(token,'qazxswedc',algorithm='HS256'),401
+			token = jwt.decode(token,'qazxswedc',algorithms=['HS256']),401
 		except:
 			return {'result': 'token is invalid'},401
 		return f(*arg,**kwargs)
