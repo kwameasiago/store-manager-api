@@ -1,8 +1,8 @@
 import unittest
 import json
 
-from ... import create_app
-from ...api.v1.model.products import Products
+from app import create_app
+from app.api.v1.model.products import Products
 
 class TestInvalidData(unittest.TestCase):
 	"""

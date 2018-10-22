@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from ... import create_app
+from app import create_app
 
 
 class TestInvalidData(unittest.TestCase):
