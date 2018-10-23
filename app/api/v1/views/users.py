@@ -32,8 +32,6 @@ class Login(Resource):
 
 @ns_users.route('/register')
 class RegisterAttendant(Resource):
-	@token_required
-	@ns_users.doc(security='apikey')
 	@ns_users.expect(mod_register)
 	def post(self):
 		data = request.get_json()
