@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 
-from ..model.products import Products
+from ..model.products import Products, products
 from ..utils.auth import token_required
 
 

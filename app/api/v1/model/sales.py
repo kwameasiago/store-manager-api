@@ -1,9 +1,11 @@
 from .verify import Verification
-from .products import Products
+from .products import Products, products
+from .users import Accounts
 
+
+sales = []
 
 class Sales(Verification):
-	sales = []
 	def __init__(self,items):
 		self.items = items
 
@@ -22,6 +24,18 @@ class Sales(Verification):
 		items = self.items
 		pid = Products.get_one(items['productId'])
 		total = pid[items['productId']]['price'] * items['quantity']
-		items['price'] = total
-		Sales.sales.append(items)
-		return {'result': 'sales added'},201
+		items['total'] = total
+		for product in products:
+			rem = product['quantity'] - self.items['quantity']
+			bal = self.items['quantity'] - product['quantity']
+			if product['quantity'] == 0:
+				return {'message': 'Out of stock'},404
+			elif  rem < 0:
+				return [{'message': 'only {} items in inventory'.format(product['quantity'])},
+				{'error':'{} more than required'.format(bal)}],406
+			else:
+				items['unit price'] = product['price']
+				sales.append(items)
+				items['userId'] = Accounts.get_id()[0]['id']
+				product['quantity'] -= self.items['quantity']
+				return {'result': 'item has been sold'},201

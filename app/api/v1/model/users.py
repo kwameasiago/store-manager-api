@@ -1,20 +1,19 @@
 import jwt
+from flask import request
 
 from .verify import Verification
-
+accounts = [{'id':0,'first_name': 'admin', 'last_name': 'admin', 
+	'email': 'admin@gmail.com','password': '1234'}]
 
 class Accounts(Verification):
 	"""
 	class for user accounts
 	"""
-	accounts = [{'first_name': 'admin', 'last_name': 'admin', 
-	'email': 'admin@gmail.com','password': '1234'}]
 	def __init__(self,items):
 		self.items = items
-		self.role = self.items['role'] != 'admin' and self.items['role'] != 'attendant'
 
 	def check_user_input(self):
-		strings = [self.items['email'],self.items['role'],self.items['password']]
+		strings = [self.items['email'],self.items['password']]
 		payload=self.is_login_payload(self.items) 
 		if payload is False:
 			res = {'result':'invalid payload'},406
@@ -24,19 +23,17 @@ class Accounts(Verification):
 			res = {'result': 'data set contains only white space'},406
 		elif self.is_email(self.items['email']) is True:
 			res = {'result': 'invalid email'}, 406
-		elif self.role:
-			res = {'result': 'invalid role'}, 406
 		else:
 			res = 1
 		return res
 
 	def login(self):
-		token = jwt.encode({'email':self.items['email'],'role':self.items['role']},'qazxswedc',
-			algorithm='HS256').decode('UTF-8')
-		for account in Accounts.accounts:
+		for account in accounts:
 			if account.get('email') == self.items['email']:
-				return {'result':token}
+				token = jwt.encode({'id':account['id']},'qazxswedc',algorithm='HS256').decode('UTF-8')
+				return [{'message': 'Login successful'},{'token':token}]
 		return {'result': 'email or password invalid'},406
+
 
 	def check_register_input(self):
 		strings = [self.items['first_name'],self.items['last_name'],self.items['role'],
@@ -46,10 +43,18 @@ class Accounts(Verification):
 			return {'result':'invalid payload'},406
 		elif self.is_whitespace(strings) is True:
 			return {'result': 'data set contains only white space'},406
+		elif self.is_empty(strings) is True:
+			return {'result': 'data set is empty'}
 		elif self.is_email(self.items['email']) is True:
 			return {'result': 'invalid email'}, 406
-		elif self.role:
+		elif self.items['role'] != 'admin' and self.items['role'] != 'attendant':
 			return {'result': 'invalid role'}, 406
 		else:
-			Accounts.accounts.append(self.items)
+			accounts.append(self.items)
 			return 1
+
+	@classmethod
+	def get_id(cls):
+		token = request.headers['X-API-KEY']
+		userId = token = jwt.decode(token,'qazxswedc',algorithms=['HS256']),401
+		return userId

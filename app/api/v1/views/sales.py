@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 
-from ..model.sales import Sales
+from ..model.sales import Sales, sales
 from ..model.products import Products
 from ..utils.auth import token_required
 
@@ -23,11 +23,10 @@ class GetAll(Resource):
 	@token_required
 	@ns_sales.doc(security='apikey')
 	def get(self):
-		sales = len(Sales.sales)
-		if sales < 1:
+		if len(sales) < 1:
 			return {'result':'no sales found'},404
 		else:
-			return Sales.sales,200
+			return sales,200
 
 	@ns_sales.expect(mod,validate=True)
 	@token_required
@@ -35,7 +34,7 @@ class GetAll(Resource):
 	def post(self):
 		data =request.get_json()
 		obj = Sales(data)
-		data['price'] = 0
+		data['total'] = 0
 		if obj.check_sales_input() == 1:
 			try:
 				return obj.add_sales()
@@ -56,6 +55,6 @@ class getOne(Resource):
 	@ns_sales.doc(security='apikey')
 	def get(self,saleId):
 		try:
-			return Sales.sales[int(saleId)]
+			return sales[int(saleId)]
 		except IndexError:
 			return {'result': 'sales does not exist'},404

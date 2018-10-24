@@ -17,9 +17,9 @@ class Verification:
 				return True
 		return False
 
-	def payload(self,items,length,keys):
+	def payload(self,items,keys):
 		items = items.keys()
-		if len(items) == length:
+		if len(items) == len(keys):
 			for item in items:
 				if item not in keys:
 					return False
@@ -28,19 +28,19 @@ class Verification:
 			return False
 
 	def is_product_payload(self,items):
-		res = self.payload(items,5,['name','category','moq','quantity','price'])
+		res = self.payload(items,['name','category','moq','quantity','price'])
 		return res
 
 	def is_sales_payload(self,items):
-		res = self.payload(items,3,['productId','quantity','price'])
+		res = self.payload(items,['productId','quantity','total'])
 		return res
 
 	def is_login_payload(self,items):
-		res = self.payload(items,3,['email','role','password'])
+		res = self.payload(items,['email','password'])
 		return res
 
 	def is_register_payload(self,items):
-		res = self.payload(items,5,['first_name','last_name','email','role','password'])
+		res = self.payload(items,['first_name','last_name','email','role','password'])
 		return  res
 
 	def is_email(self,email):

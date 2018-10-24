@@ -2,7 +2,7 @@ import unittest
 import json
 
 from app import create_app
-from app.api.v1.model.products import Products
+from app.api.v1.model.products import products
 
 class TestInvalidData(unittest.TestCase):
 	"""
@@ -11,11 +11,11 @@ class TestInvalidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		payload = {'role': 'admin', 'password': '1234', 'email': 'admin@gmail.com'}
+		payload = {'password': '1234', 'email': 'admin@gmail.com'}
 		response = self.test.post('/api/v1/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
-		token = data['result']
+		token = data[1]['token']
 		self.headers = {'X-API-KEY':'{}'.format(token)}
 
 	def tearDown(self):
@@ -88,25 +88,25 @@ class TestValidData(unittest.TestCase):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
 		self.payload = {'name': 'omo', 'quantity': 1, 'category': 'furniture','moq':0,'price':100}
-		payload = {'role': 'admin', 'password': '1234', 'email': 'admin@gmail.com'}
+		payload = {'password': '1234', 'email': 'admin@gmail.com'}
 		response = self.test.post('/api/v1/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
-		token = data['result']
+		token = data[1]['token']
 		self.headers = {'X-API-KEY':'{}'.format(token)}
 
 
 	def tearDown(self):
 		self.test = None
 		self.content_type = None
-		Products.products.clear()
+		products.clear()
 
 	def test_post_products_data(self):
 		response = self.test.post('/api/v1/products/',content_type=self.content_type,
 			data=json.dumps(self.payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,201)
-		self.assertEqual(data,{'result':'product added'})
+		self.assertEqual(data,{'result':'product has added to database'})
 
 
 	def test_get_all_products(self):
