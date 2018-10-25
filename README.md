@@ -42,9 +42,9 @@ open localhost
 
 **EndPoint Functionality**  
 
-					
-| Left-aligned | Center-aligned | Right-aligned |
-| :---         |     :---:      |          ---: |
+
+| HTTP METHOD | URL | INFO |
+| :---         |     :---:      |          :--- |
 | GET   | /products     | Fetch all products  Get all available products.   | 
 | GET   | /products/productId     | Fetch a single product record   | 
 | GET   | /sales     | Fetch all sale records  Get all sale records.  | 
