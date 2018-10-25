@@ -43,7 +43,6 @@ open localhost
 
 | Left-aligned | Center-aligned | Right-aligned |
 | :---         |     :---:      |          ---: |
-
 | GET |/products | 			Fetch all products  Get all available products.| 
 2. GET /products/productId  Fetch a single product record  
 3. GET /sales  				Fetch all sale records  Get all sale records.
