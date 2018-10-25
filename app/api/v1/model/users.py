@@ -50,6 +50,7 @@ class Accounts(Verification):
 		elif self.items['role'] != 'admin' and self.items['role'] != 'attendant':
 			return {'result': 'invalid role'}, 406
 		else:
+			self.items['id'] = len(accounts)
 			accounts.append(self.items)
 			return 1
 
