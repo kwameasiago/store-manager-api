@@ -55,4 +55,9 @@ open localhost
 	
 
 **Authors**
+
 Kwame Asiago
+
+**Hosted link**
+
+http://storemanage2000.herokuapp.com/api/v1/
