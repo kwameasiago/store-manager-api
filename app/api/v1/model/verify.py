@@ -8,13 +8,13 @@ class Verification:
 	def is_empty(self,items):
 		for item in items:
 			if bool(item) is False:
-				return True
+				return items.index(item)
 		return False
 
 	def is_whitespace(self,items):
 		for item in items:
 			if item.isspace() is True:
-				return True
+				return items.index(item)
 		return False
 
 	def payload(self,items,keys):

@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Resource, Namespace,fields
 
-from ..utils.auth import token_required
+from ..utils.auth import token_required, only_admin
 from ..model.users import Accounts,accounts
 
 ns_users = Namespace('users',description='Users endpoints')
@@ -20,7 +20,7 @@ mod_register = ns_users.model('register store attendant',{
 
 @ns_users.route('/login')
 class Login(Resource):
-	@ns_users.expect(mod_login)
+	@ns_users.expect(mod_login,validate=True)
 	def post(self):
 		obj = Accounts(request.get_json())
 		if obj.check_user_input() == 1:
@@ -32,8 +32,9 @@ class Login(Resource):
 @ns_users.route('/register')
 class RegisterAttendant(Resource):
 	@token_required
+	@only_admin
 	@ns_users.doc(security='apikey')
-	@ns_users.expect(mod_register)
+	@ns_users.expect(mod_register,validate=True)
 	def post(self):
 		data = request.get_json()
 		obj = Accounts(data)

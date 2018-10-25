@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Namespace, Resource, fields
 
 from ..model.products import Products, products
-from ..utils.auth import token_required
+from ..utils.auth import token_required,only_admin
 
 
 ns_product = Namespace('products',description='Products endpoints')
@@ -29,6 +29,7 @@ class AllProduct(Resource):
 
 	@ns_product.expect(mod,validate=True)
 	@token_required
+	@only_admin
 	@ns_product.doc(security='apikey')
 	def post(self):
 		data = request.get_json()

@@ -18,10 +18,23 @@ class TestInvalidData(unittest.TestCase):
 		token = data[1]['token']
 		self.headers = {'X-API-KEY':'{}'.format(token)}
 
+		attendant = {"role": "attendant","first_name": "john","email": "john@gmail.com",
+		"last_name": "doe","password": "1234"}
+		self.test.post('api/v1/users/register', content_type=self.content_type,
+			data=json.dumps(attendant), headers=self.headers)
+
+		payload = {'password': '1234', 'email': 'john@gmail.com'}
+		response = self.test.post('/api/v1/users/login',content_type=self.content_type,
+			data=json.dumps(payload))
+		data =json.loads(response.get_data().decode('UTF-8'))
+		token = data[1]['token']
+		self.headers = {'X-API-KEY':'{}'.format(token)}
+
+
+
 	def tearDown(self):
 		self.test = None
 		self.content_type = None
-
 
 	# test if user enter an invalid json  payload
 	def test_invalid_payload(self):
@@ -78,10 +91,21 @@ class TestValidData(unittest.TestCase):
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
 		token = data[1]['token']
-		self.headers = {'X-API-KEY':'{}'.format(token)}
+		self.headers_admin = {'X-API-KEY':'{}'.format(token)}
 		self.product = {'name': 'omo', 'quantity': 21, 'category': 'furniture','moq':0,'price':100}
 		self.test.post('/api/v1/products/',content_type=self.content_type,
-			data=json.dumps(self.product),headers=self.headers)
+			data=json.dumps(self.product),headers=self.headers_admin)
+		attendant = {"role": "attendant","first_name": "john","email": "john@gmail.com",
+		"last_name": "doe","password": "1234"}
+		self.test.post('api/v1/users/register', content_type=self.content_type,
+			data=json.dumps(attendant), headers=self.headers_admin)
+
+		payload = {'password': '1234', 'email': 'john@gmail.com'}
+		response = self.test.post('/api/v1/users/login',content_type=self.content_type,
+			data=json.dumps(payload))
+		data =json.loads(response.get_data().decode('UTF-8'))
+		token = data[1]['token']
+		self.headers = {'X-API-KEY':'{}'.format(token)}
 		self.payload = {'quantity':10,'productId':0}
 
 	def tearDown(self):
@@ -104,13 +128,13 @@ class TestValidData(unittest.TestCase):
 			data=json.dumps(self.payload),headers=self.headers)
 		self.assertEqual(response.status_code,201)
 		response = self.test.get('/api/v1/sales/',content_type=self.content_type
-			,headers=self.headers)
+			,headers=self.headers_admin)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,200)
 
 	def get_one_sales(self):
 		response = self.test.post('/api/v1/sales/',content_type=self.content_type,
-			data=json.dumps(self.payload),headers=self.headers)
+			data=json.dumps(self.payload),headers=self.headers_admin)
 		self.assertEqual(response.status_code,201)
 		response = self.test.get('/api/v1/sales/{}'.format(0),content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
