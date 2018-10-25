@@ -2,7 +2,7 @@ import unittest
 import json
 
 from app import create_app
-from app.api.v1.model.sales import Sales
+from app.api.v1.model.sales import Sales, sales
 
 class TestInvalidData(unittest.TestCase):
 	"""
@@ -11,11 +11,11 @@ class TestInvalidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		payload = {'role': 'admin', 'password': '1234', 'email': 'admin@gmail.com'}
+		payload = {'password': '1234', 'email': 'admin@gmail.com'}
 		response = self.test.post('/api/v1/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
-		token = data['result']
+		token = data[1]['token']
 		self.headers = {'X-API-KEY':'{}'.format(token)}
 
 	def tearDown(self):
@@ -73,11 +73,11 @@ class TestValidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		payload = {'role': 'admin', 'password': '1234', 'email': 'admin@gmail.com'}
+		payload = {'password': '1234', 'email': 'admin@gmail.com'}
 		response = self.test.post('/api/v1/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
-		token = data['result']
+		token = data[1]['token']
 		self.headers = {'X-API-KEY':'{}'.format(token)}
 		self.product = {'name': 'omo', 'quantity': 21, 'category': 'furniture','moq':0,'price':100}
 		self.test.post('/api/v1/products/',content_type=self.content_type,
@@ -89,13 +89,13 @@ class TestValidData(unittest.TestCase):
 		self.content_type = None
 		self.product = None
 		self.payload = None
-		Sales.sales.clear()
+		sales.clear()
 
 	def test_add_sales(self):
 		response = self.test.post('/api/v1/sales/',content_type=self.content_type,
 			data=json.dumps(self.payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
-		self.assertEqual(data,{'result': 'sales added'})
+		self.assertEqual(data,{'result': 'item has been sold'})
 		self.assertEqual(response.status_code,201)
 
 

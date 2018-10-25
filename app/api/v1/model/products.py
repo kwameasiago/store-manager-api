@@ -1,8 +1,9 @@
 from .verify import Verification
 
 
+products = []
+
 class Products(Verification):
-	products = []
 	def __init__(self,items):
 		self.items = items
 
@@ -23,20 +24,24 @@ class Products(Verification):
 			return 1
 
 	def add_product(self):
-		self.items['id'] = len(Products.products)
-		Products.products.append(self.items)
-		return {'result': 'product added'},201
+		self.items['id'] = len(products)
+		for product in products:
+			if product['name'] == self.items['name']:
+				product['quantity'] += self.items['quantity']
+				return {'result': 'product quantity has been increased'},201
+		products.append(self.items)
+		return {'result': 'product has added to database'},201
 
 	@classmethod
 	def get_all(cls):
-		if len(Products.products) == 0:
+		if len(products) == 0:
 			return {'result': 'no products found'},404
 		else:
-			return Products.products,200
+			return [{'message': 'all products'},products],200
 
 	@classmethod
 	def get_one(cls,productId):
-		if len(Products.products) == 0:
+		if len(products) == 0:
 			return {'result': 'no products found'},404
 		else:
-			return Products.products[productId],200
+			return products[productId],200

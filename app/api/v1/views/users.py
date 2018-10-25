@@ -2,12 +2,11 @@ from flask import request
 from flask_restplus import Resource, Namespace,fields
 
 from ..utils.auth import token_required
-from ..model.users import Accounts
+from ..model.users import Accounts,accounts
 
 ns_users = Namespace('users',description='Users endpoints')
 mod_login = ns_users.model('users model',{
 	'email':fields.String('Users email'),
-	'role': fields.String('Role of user'),
 	'password':fields.String('Users password')
 	})
 
@@ -37,6 +36,6 @@ class RegisterAttendant(Resource):
 		data = request.get_json()
 		obj = Accounts(data)
 		if obj.check_register_input() == 1:
-			return Accounts.accounts
+			return [{'result': 'new employee added'},data]
 		else:
 			return obj.check_register_input()
