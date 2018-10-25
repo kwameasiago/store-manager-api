@@ -15,7 +15,7 @@ class TestVerification(unittest.TestCase):
 	# test empty data
 	def test_is_empty(self):
 		test = self.obj.is_empty(['','dad'])
-		self.assertTrue(test)
+		self.assertEqual(test,0)
 
 	# if data is not emoty
 	def test_not_empty(self):
@@ -25,7 +25,7 @@ class TestVerification(unittest.TestCase):
 	# test if white space
 	def test_is_whitespace(self):
 		test = self.obj.is_whitespace(['  ','d'])
-		self.assertTrue(test)
+		self.assertEqual(test,0)
 
 	# test if not whitespace
 	def test_not_whitespace(self):

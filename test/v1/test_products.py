@@ -30,7 +30,7 @@ class TestInvalidData(unittest.TestCase):
 			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result': 'data set is empty'})
+		self.assertEqual(data,{'result': 'data set name is empty'})
 
 	# test when input contains only white space
 	def test_white_space_products(self):
@@ -39,7 +39,7 @@ class TestInvalidData(unittest.TestCase):
 			data=json.dumps(payload),headers=self.headers)
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result': 'data set contains only white space'})
+		self.assertEqual(data,{'result': 'data set name contains only white space'})
 
 	# test if user enter an invalid json  payload
 	def test_invalid_payload(self):

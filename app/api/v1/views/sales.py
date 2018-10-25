@@ -3,7 +3,7 @@ from flask_restplus import Namespace, Resource, fields
 
 from ..model.sales import Sales, sales
 from ..model.products import Products
-from ..utils.auth import token_required
+from ..utils.auth import token_required, only_attendant, only_admin
 
 
 ns_sales = Namespace('sales',description='Sales Endpoints')
@@ -21,6 +21,7 @@ class GetAll(Resource):
 	for sales record
 	"""
 	@token_required
+	@only_admin
 	@ns_sales.doc(security='apikey')
 	def get(self):
 		if len(sales) < 1:
@@ -30,6 +31,7 @@ class GetAll(Resource):
 
 	@ns_sales.expect(mod,validate=True)
 	@token_required
+	@only_attendant
 	@ns_sales.doc(security='apikey')
 	def post(self):
 		data =request.get_json()

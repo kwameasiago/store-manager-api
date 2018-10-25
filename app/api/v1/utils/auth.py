@@ -19,3 +19,24 @@ def token_required(f):
 			return {'result': 'token is invalid'},401
 		return f(*arg,**kwargs)
 	return decorated
+
+
+def only_admin(f):
+	@wraps(f)
+	def decorated(*arg,**kwargs):
+		token = request.headers['X-API-KEY']
+		token = jwt.decode(token,'qazxswedc',algorithms=['HS256'])
+		if token['id'] != 0:
+			return {'message':'This endpoint is only accessible to admin'}, 401
+		return f(*arg,**kwargs)
+	return decorated
+
+def only_attendant(f):
+	@wraps(f)
+	def decorated(*arg,**kwargs):
+		token = request.headers['X-API-KEY']
+		token = jwt.decode(token,'qazxswedc',algorithms=['HS256'])
+		if token['id'] == 0:
+			return {'message':'This endpoint is only accessible to store attendant'}, 401
+		return f(*arg,**kwargs)
+	return decorated
