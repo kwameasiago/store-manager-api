@@ -43,9 +43,9 @@ open localhost
 
 | Left-aligned | Center-aligned | Right-aligned |
 | :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
+| GET   | /products     | git status    |Fetch all products  Get all available products.
 
-1. GET /products  			Fetch all products  Get all available products. 
+1.    			 
 2. GET /products/productId  Fetch a single product record  
 3. GET /sales  				Fetch all sale records  Get all sale records.
 4. GET /sales/saleId  		Fetch a single sale record  
