@@ -40,12 +40,12 @@ open localhost
 8. Store attendants should be able to add products to specific categories. 
 
 **EndPoint Functionality**
-1. GET /products  			Fetch all products  Get all available products. 
-2. GET /products/productId  Fetch a single product record  
-3. GET /sales  				Fetch all sale records  Get all sale records.
-4. GET /sales/saleId  		Fetch a single sale record  
-5. POST /products  			Create a product
-6. POST /sales  			Create a sale order
+1. GET | /products  	|		Fetch all products  Get all available products. 
+2. GET |/products/productId|  Fetch a single product record  
+3. GET |/sales  			|	Fetch all sale records  Get all sale records.
+4. GET |/sales/saleId  		|Fetch a single sale record  
+5. POST|/products  			|Create a product
+6. POST| /sales  			|Create a sale order
 
 **Authors**
 Kwame Asiago
