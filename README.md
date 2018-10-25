@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/SelaDanti/store-manager-api.svg?branch=develop)](https://travis-ci.org/SelaDanti/store-manager-api)  [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/SelaDanti/store-manager-api/pulls)  [![Coverage Status](https://coveralls.io/repos/github/SelaDanti/store-manager-api/badge.svg?branch=develop)](https://coveralls.io/github/SelaDanti/store-manager-api?branch=ft-login-161314309)  [![Maintainability](https://api.codeclimate.com/v1/badges/60c87ea49fd604c81112/maintainability)](https://codeclimate.com/github/SelaDanti/store-manager-api/maintainability)
+[![Build Status](https://travis-ci.org/SelaDanti/store-manager-api.svg?branch=develop)](https://travis-ci.org/SelaDanti/store-manager-api)
+[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/SelaDanti/store-manager-api/pulls)
+[![Coverage Status](https://coveralls.io/repos/github/SelaDanti/store-manager-api/badge.svg?branch=develop)](https://coveralls.io/github/SelaDanti/store-manager-api?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/60c87ea49fd604c81112/maintainability)](https://codeclimate.com/github/SelaDanti/store-manager-api/maintainability)
 
 **Store Manager**
 
