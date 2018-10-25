@@ -40,7 +40,9 @@ open localhost
 8. Store attendants should be able to add products to specific categories. 
 
 
-**EndPoint Functionality**  					
+**EndPoint Functionality**  
+
+					
 | Left-aligned | Center-aligned | Right-aligned |
 | :---         |     :---:      |          ---: |
 | GET   | /products     | Fetch all products  Get all available products.   | 
